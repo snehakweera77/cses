@@ -14,10 +14,14 @@ public class MinimizingCoins {
         for (int i = 0; i < n; i++)
             coin[i] = fsr.nextInt();
         dp[0] = 0;
+        int temp = 0;
         for (int i = 1; i <= x; i++) {
             for (int j = 0; j < n; j++) {
-                if (i - coin[j] >= 0)
-                    dp[i] = Math.min(dp[i], 1 + dp[i - coin[j]]);
+                if (coin[j] <= i) {
+                    temp = dp[i - coin[j]];
+                    if ((temp + 1) < dp[i] && temp != Integer.MAX_VALUE )
+                        dp[i] = temp + 1;
+                }
             }
         }
         if (dp[x] >= Integer.MAX_VALUE)
