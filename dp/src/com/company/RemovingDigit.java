@@ -5,30 +5,18 @@ import java.util.StringTokenizer;
 public class RemovingDigit {
     public static void main(String[] args) {
         PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
-        CoinCombinationII.FastReader fsr = new CoinCombinationII.FastReader();
+        FastReader fsr = new FastReader();
         int n = fsr.nextInt();
-        int x = fsr.nextInt();
-        int[] dp = new int[x + 1];
-        int[] coin = new int[n];
-        for (int i = 0; i < n; i++)
-            coin[i] = fsr.nextInt();
-        dp[0] = 1;
-        int mod = 1000000007;
-        Arrays.sort(coin);
-        for (int c : coin){
-            for (int i = 0; i <= x - c; ++i)
-                dp[i + c] = (dp[i + c] + dp[i]) % mod;
-        }
-
-
-        /*for (int i = 0; i < n; i++) {
-            for (int j = coin[i]; j <= x; j++) {
-                dp[j] = dp[j] + dp[j - coin[i]];
-                if (dp[j] > mod)
-                    dp[j] -= mod;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 0; i <= n; i++) {
+            char[] cArr = String.valueOf(i).toCharArray();
+            for (char c :cArr) {
+                dp[i] = Math.min(dp[i], dp[i - (c - '0')] + 1);
             }
-        }*/
-        System.out.println(dp[x] % mod);
+        }
+        System.out.println(dp[n]);
     }
     static class FastReader {
 
